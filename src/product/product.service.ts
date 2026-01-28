@@ -6,25 +6,33 @@ import { Product } from '@prisma/client';
 
 @Injectable()
 export class ProductService {
-
-  constructor(private readonly prisma: PrismaService){}
+  constructor(private readonly prisma: PrismaService) {}
 
   async createProduct(dto: CreateProductDto): Promise<Product> {
     return this.prisma.product.create({
       data: dto,
-    })
+    });
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async getAllProducts(): Promise<Product[]> {
+    return await this.prisma.product.findMany({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async getProductByName(name: string): Promise<Product[]> {
+    return await this.prisma.product.findMany({
+      where: {
+        name: {
+          contains: name,
+        },
+      },
+    });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async updateProductById(id: number, dto: UpdateProductDto) {
+    return await this.prisma.product.update({
+      where:{ id },
+        data: dto 
+    });
   }
 
   remove(id: number) {

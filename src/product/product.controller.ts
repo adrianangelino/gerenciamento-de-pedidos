@@ -13,19 +13,19 @@ export class ProductController {
     return await this.productService.createProduct(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.productService.findAll();
+  @Get('/get-all-products')
+  async getAllProducts(): Promise <Product[]> {
+    return await this.productService.getAllProducts();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+  @Get('/by-name/:name')
+  async getProductByName(@Param('name') name: string): Promise<Product[]> {
+    return await this.productService.getProductByName(name);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  @Patch('/update-Product-By-Id/:id')
+  async updateProductById(@Param('id') id: string, @Body() dto: UpdateProductDto) {
+    return await this.productService.updateProductById(+id, dto);
   }
 
   @Delete(':id')
