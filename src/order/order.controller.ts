@@ -24,8 +24,8 @@ export class OrderController {
   }
 
   @Patch('/update-Order-By-Id/:id')
-  async updateOrderById(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto): Promise<Order> {
-    return this.orderService.updateOrderById(+id, updateOrderDto);
+  async updateOrderById(@Param('id') id: string, @Body() dto: UpdateOrderDto): Promise<Order> {
+    return this.orderService.updateOrderById(+id, dto);
   }
 
   @Delete('/soft-Deleted-Order/:id')

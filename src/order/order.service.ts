@@ -137,13 +137,13 @@ export class OrderService {
     return order;
   }
 
-  async updateOrderById(id: number, updateOrderDto: UpdateOrderDto) {
+  async updateOrderById(id: number, dto: UpdateOrderDto) {
     await this.getOrderById(id);
 
     return this.prisma.order.update({
       where: { id },
       data: {
-        status: updateOrderDto.status,
+        status: dto.status,
       },
       include: {
         item: {
