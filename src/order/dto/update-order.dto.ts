@@ -1,4 +1,5 @@
 import { IsOptional, IsEnum } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum OrderStatus {
   PENDENTE = 'Pendente',
@@ -7,6 +8,12 @@ export enum OrderStatus {
 }
 
 export class UpdateOrderDto {
+  @ApiProperty({ 
+    enum: OrderStatus, 
+    description: 'Status do pedido', 
+    example: OrderStatus.PENDENTE,
+    required: false 
+  })
   @IsOptional()
   @IsEnum(OrderStatus, {
     message: 'Status deve ser: Pendente, Concluído ou Cancelado',

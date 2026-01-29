@@ -1,0 +1,24 @@
+services:
+  app:
+    container_name: gerenciador-pedidos-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=file:/app/data/dev.db
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - sqlite_data:/app/data
+    command: sh -c "npx prisma migrate deploy && npm run start:dev"
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
+    driver: local

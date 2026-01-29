@@ -44,6 +44,81 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Docker
+
+### Configuração inicial
+
+Antes de executar o Docker, certifique-se de que o arquivo `.env` existe na raiz do projeto:
+
+```bash
+# Copiar arquivo de exemplo
+$ cp .env.example .env
+```
+
+Ou criar manualmente o arquivo `.env` com o conteúdo:
+
+```env
+DATABASE_URL="file:./dev.db"
+NODE_ENV=development
+PORT=3000
+```
+
+### Executar com Docker Compose (Recomendado)
+
+```bash
+# Iniciar aplicação em modo desenvolvimento
+$ docker compose up
+
+# Iniciar em background
+$ docker compose up -d
+
+# Parar containers
+$ docker compose down
+
+# Reconstruir imagens
+$ docker compose up --build
+```
+
+### Executar com Docker (Produção)
+
+```bash
+# Build da imagem
+$ docker build -t gerenciador-pedidos .
+
+# Executar container
+$ docker run -p 3000:3000 -e DATABASE_URL="file:./data/dev.db" gerenciador-pedidos
+```
+
+A aplicação estará disponível em `http://localhost:3000`
+
+A documentação Swagger estará disponível em `http://localhost:3000/api`
+
+## API Documentation
+
+Este projeto utiliza Swagger para documentação da API. Após iniciar a aplicação, acesse:
+
+- **URL:** `http://localhost:3000/api`
+- **Documentação interativa** com todos os endpoints
+- **Teste de endpoints** diretamente pelo navegador
+
+### Endpoints disponíveis:
+
+#### Products
+
+- `POST /product/create-product` - Criar novo produto
+- `GET /product/get-all-products` - Listar todos os produtos
+- `GET /product/by-name/:name` - Buscar produto por nome
+- `PATCH /product/update-Product-By-Id/:id` - Atualizar produto
+- `DELETE /product/soft-Deleted-Product/:id` - Excluir produto (soft delete)
+
+#### Orders
+
+- `POST /order/create-Order` - Criar novo pedido
+- `GET /order/get-All-Orders` - Listar todos os pedidos
+- `GET /order/get-Order-By-Id/:id` - Buscar pedido por ID
+- `PATCH /order/update-Order-By-Id/:id` - Atualizar pedido
+- `DELETE /order/soft-Deleted-Order/:id` - Excluir pedido (soft delete)
+
 ## Run tests
 
 ```bash
