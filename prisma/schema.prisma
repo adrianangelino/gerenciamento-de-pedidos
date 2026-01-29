@@ -18,6 +18,27 @@ model Product {
   name        String
   description String
   category    String
+  createdAt   DateTime    @default(now())
+  deletedAt   DateTime?
   price       Float
   quantity    Int
+  pedidos     OrderItem[]
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  total_pedido Float       @default(0)
+  status       String      @default("Pendente") 
+  createdAt    DateTime    @default(now())
+  deletedAt    DateTime?
+  item        OrderItem[]
+}
+
+model OrderItem {
+  id         Int     @id @default(autoincrement())
+  pedido     Order   @relation(fields: [orderId], references: [id])
+  orderId    Int
+  produto    Product @relation(fields: [productId], references: [id])
+  productId  Int
+  quantity Int
 }

@@ -24,12 +24,12 @@ export class ProductController {
   }
 
   @Patch('/update-Product-By-Id/:id')
-  async updateProductById(@Param('id') id: string, @Body() dto: UpdateProductDto) {
+  async updateProductById(@Param('id') id: string, @Body() dto: UpdateProductDto): Promise<Product> {
     return await this.productService.updateProductById(+id, dto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productService.remove(+id);
+  @Delete('/soft-Deleted-Product/:id')
+  async softDeletedProduct(@Param('id') id: string): Promise<Product> {
+    return await this.productService.softDeletedProduct(+id);
   }
 }

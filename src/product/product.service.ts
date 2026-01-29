@@ -28,14 +28,17 @@ export class ProductService {
     });
   }
 
-  async updateProductById(id: number, dto: UpdateProductDto) {
+  async updateProductById(id: number, dto: UpdateProductDto): Promise<Product> {
     return await this.prisma.product.update({
       where:{ id },
         data: dto 
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async softDeletedProduct(id: number): Promise<Product> {
+    return await this.prisma.product.update({
+      where: { id },
+      data: { deletedAt: new Date() }
+    });
   }
 }
